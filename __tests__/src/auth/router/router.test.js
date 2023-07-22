@@ -3,10 +3,10 @@
 process.env.SECRET = 'TEST_SECRET';
 
 // const { db } = require('../../../../src/auth/models');
-const { db } = require('../../../../src/auth/router/handlers');
+const { db } = require('../../../../src/auth/models/index.model.js');
 const supertest = require('supertest');
 // const server = require('../../../../src/server.js').server;
-const server = require('../../../../src/auth/models/index.model.js');
+const {server} = require('../../../../src/server.js');
 const { beforeAll, afterAll, expect } = require('@jest/globals');
 
 const mockRequest = supertest(server);
