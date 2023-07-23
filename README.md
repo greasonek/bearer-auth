@@ -1,3 +1,5 @@
+# Author: Emily Greason
+
 # NOTES
 
 > client (thunderclient, terminal, postman, web app, browser) send request to server for /signup (POST) - request is JSON object { username: password } to the body of the request
