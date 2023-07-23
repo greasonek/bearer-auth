@@ -18,7 +18,7 @@ const userSchema = (sequelize, DataTypes) => {
       get() {
         return jwt.sign({ username: this.username }, SECRET, {
           expiresIn: 846000000, 
-          // maxAge: '10 days',
+          maxAge: '10 days',
         });
       },
     },
