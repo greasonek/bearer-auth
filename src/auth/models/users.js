@@ -13,15 +13,34 @@ const userSchema = (sequelize, DataTypes) => {
       type: DataTypes.STRING, 
       allowNull: false, 
     },
+    // role added to user model for LAB8
+    role: {
+      // a set of unique values
+      type: DataTypes.ENUM('user', 'writer', 'editor', 'admin'),
+      defaultValue: 'user',
+    },
     token: {
       type: DataTypes.VIRTUAL,
       get() {
         return jwt.sign({ username: this.username }, SECRET, {
           expiresIn: 846000000, 
-          maxAge: '10 days',
+          // maxAge: '10 days',
         });
       },
     },
+    // capabilities/permissions that this user has 
+    capabilities: {
+      type: DataTypes.VIRTUAL,
+      get(){
+        const acl = {
+          user: ['read'],
+          writes: ['read', 'create'],
+          editor: ['read', 'create', 'update'],
+          admin: ['read', 'create', 'update', 'delete'],
+        };
+        return acl[this.role];
+      }
+    }
   });
 
   model.beforeCreate(async (user) => {
@@ -53,6 +72,7 @@ const userSchema = (sequelize, DataTypes) => {
   };
 
   return model;
+  
 };
 
 module.exports = userSchema;
